@@ -1,10 +1,14 @@
 package lk.ijse.myposbackend.controller;
 
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.myposbackend.dto.UserDTO;
+import lk.ijse.myposbackend.persistence.UserDb;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -37,7 +41,23 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        if (req.getContentType()!=null && req.getContentType().toLowerCase().startsWith("application/json")){
+            Jsonb jsonb = JsonbBuilder.create();
+
+            UserDTO userDTO = jsonb.fromJson(req.getReader(),UserDTO.class);
+
+            System.out.println(userDTO.getUserName());
+            var userDb = new UserDb();
+            boolean result = userDb.saveUser(userDTO, connection);
+
+            if (result){
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.getWriter().write("User information saved successfully!");
+            }else {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Fail to saved user information!");
+            }
+
+        }
     }
 
 
