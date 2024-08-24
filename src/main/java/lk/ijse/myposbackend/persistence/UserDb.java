@@ -13,7 +13,7 @@ public class UserDb {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, userDTO.getUserName());
+            preparedStatement.setString(1, userDTO.getUsername());
             preparedStatement.setString(2, userDTO.getEmail());
             preparedStatement.setString(3, userDTO.getPassword());
 
@@ -21,6 +21,29 @@ public class UserDb {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    public UserDTO getUser(String userName, Connection connection){
+        System.out.println("Db get user / "+userName);
+        String sql = "select * from users where username=?;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,userName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                return new UserDTO(
+                        resultSet.getString("username"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
 
