@@ -68,14 +68,14 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        System.out.println("Trigger doPost Method");
+        System.out.println("Trigger doPost Method ");
         if (req.getContentType()!=null && req.getContentType().toLowerCase().startsWith("application/json")){
             Jsonb jsonb = JsonbBuilder.create();
 
             UserDTO userDTO = jsonb.fromJson(req.getReader(),UserDTO.class);
 
-            System.out.println(userDTO.getUsername());
-            /*var userDb = new UserDb();
+            System.out.println(userDTO.toString());
+            var userDb = new UserDb();
             boolean result = userDb.saveUser(userDTO, connection);
 
             if (result){
@@ -83,7 +83,7 @@ public class UserController extends HttpServlet {
                 resp.getWriter().write("User information saved successfully!");
             }else {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Fail to saved user information!");
-            }*/
+            }
 
         }
     }
