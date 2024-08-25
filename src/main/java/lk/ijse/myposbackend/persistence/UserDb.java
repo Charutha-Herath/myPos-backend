@@ -9,11 +9,11 @@ import java.sql.SQLException;
 
 public class UserDb {
     public boolean saveUser(UserDTO userDTO, Connection connection){
-        String sql = "insert into user(userName,email,password) values(?,?,?);";
+        String sql = "insert into users(username,email,password) values(?,?,?);";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, userDTO.getUsername());
+            preparedStatement.setString(1, userDTO.getUserName());
             preparedStatement.setString(2, userDTO.getEmail());
             preparedStatement.setString(3, userDTO.getPassword());
 
