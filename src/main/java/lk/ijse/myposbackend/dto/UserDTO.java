@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserDTO implements Serializable {
 
-    private String username;
+    private String userName;
     private String email;
     private String password;
 }
