@@ -84,25 +84,28 @@ public class ItemController extends HttpServlet {
         }
     }
 
-    /*@Override
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getContentType() != null && req.getContentType().toLowerCase().startsWith("application/json")){
             Jsonb jsonb = JsonbBuilder.create();
             ItemDTO itemDTO = jsonb.fromJson(req.getReader(), ItemDTO.class);
 
             var itemDb = new ItemDb();
+
+            System.out.println("itemDto : "+ itemDTO.toString());
+
             boolean result = itemDb.updateItem(connection, itemDTO);
 
             if (result){
                 resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().write("Customer information updated successfully!");
+                resp.getWriter().write("Item information updated successfully!");
             }else {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
             }
         }else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
-    }*/
+    }
 
     /*@Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

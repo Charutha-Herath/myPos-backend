@@ -71,6 +71,22 @@ public class ItemDb {
         }
     }
 
+    public boolean updateItem(Connection connection, ItemDTO itemDTO){
+        String sql = "update item set name=?, qty=?, price=? where id=?;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,itemDTO.getDescription());
+            preparedStatement.setString(2,itemDTO.getQty());
+            preparedStatement.setString(3,itemDTO.getPrice());
+            preparedStatement.setString(4,itemDTO.getItemCode());
+
+            return preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /*public boolean deleteItem(Connection connection, String code){
         String sql = "delete from item where itemCode=?;";
 

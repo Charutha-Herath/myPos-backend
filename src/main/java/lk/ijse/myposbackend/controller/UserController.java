@@ -7,7 +7,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.myposbackend.dto.ItemDTO;
 import lk.ijse.myposbackend.dto.UserDTO;
+import lk.ijse.myposbackend.persistence.ItemDb;
 import lk.ijse.myposbackend.persistence.UserDb;
 
 import javax.naming.InitialContext;
@@ -87,6 +89,26 @@ public class UserController extends HttpServlet {
 
         }
     }
+
+    /*@Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getContentType() != null && req.getContentType().toLowerCase().startsWith("application/json")){
+            Jsonb jsonb = JsonbBuilder.create();
+            ItemDTO itemDTO = jsonb.fromJson(req.getReader(), ItemDTO.class);
+
+            var itemDb = new ItemDb();
+            boolean result = itemDb.updateItem(connection, itemDTO);
+
+            if (result){
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.getWriter().write("Item updated successfully!");
+            }else {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
+            }
+        }else {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }*/
 
 
 }
