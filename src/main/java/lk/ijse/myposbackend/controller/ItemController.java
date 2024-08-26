@@ -107,10 +107,10 @@ public class ItemController extends HttpServlet {
         }
     }
 
-    /*@Override
+    @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code = req.getParameter("itemCode");
-        System.out.println(code);
+        System.out.println("Code : "+code);
         var itemDb = new ItemDb();
         boolean result = itemDb.deleteItem(connection, code);
 
@@ -120,7 +120,7 @@ public class ItemController extends HttpServlet {
         }else {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
         }
-    }*/
+    }
 
     private void getAllItem(HttpServletRequest req, HttpServletResponse resp){
         var itemDb = new ItemDb();

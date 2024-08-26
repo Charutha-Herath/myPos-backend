@@ -87,8 +87,8 @@ public class ItemDb {
         }
     }
 
-    /*public boolean deleteItem(Connection connection, String code){
-        String sql = "delete from item where itemCode=?;";
+    public boolean deleteItem(Connection connection, String code){
+        String sql = "delete from item where id=?;";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -97,7 +97,7 @@ public class ItemDb {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
     /*public boolean updateItem(Connection connection, ItemDTO itemDTO){
         String sql = "update item set description=?, qty=?, price=? where itemCode=?;";
