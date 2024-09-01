@@ -70,7 +70,7 @@ public class CustomerDb {
         return null;
     }*/
 
-    /*public ArrayList<CustomerDTO> getAllCustomer(Connection connection){
+    public ArrayList<CustomerDTO> getAllCustomer(Connection connection){
         String sql = "select * from customer;";
 
         try {
@@ -81,8 +81,8 @@ public class CustomerDb {
                  CustomerDTO customerDTO = new CustomerDTO(
                          resultSet.getString("customerId"),
                          resultSet.getString("customerName"),
-                         resultSet.getString("city"),
-                         resultSet.getString("email")
+                         resultSet.getString("contact"),
+                         resultSet.getString("address")
                  );
                  customerDTOS.add(customerDTO);
              }
@@ -90,9 +90,9 @@ public class CustomerDb {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
-    public boolean deleteCustomer(Connection connection, String custId){
+    /*public boolean deleteCustomer(Connection connection, String custId){
         String sql = "delete from customer where customerId=?;";
 
         try {
@@ -102,7 +102,7 @@ public class CustomerDb {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     /*public boolean updateCustomer(Connection connection, CustomerDTO customerDTO){
         String sql = "update customer set customerName=?, city=?, email=? where customerId=?;";
