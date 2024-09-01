@@ -32,43 +32,7 @@ public class CustomerDb {
         return null;
     }
 
-   /* public boolean saveCustomer(Connection connection, CustomerDTO customerDTO){
-        String sql = "insert into customer(customerId,customerName,city,email) value(?,?,?,?);";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,customerDTO.getCustomerId());
-            preparedStatement.setString(2,customerDTO.getCustomerName());
-            preparedStatement.setString(3,customerDTO.getCity());
-            preparedStatement.setString(4,customerDTO.getEmail());
-
-            return preparedStatement.executeUpdate() != 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-    /*public CustomerDTO getCustomer(Connection connection, String custId){
-        String sql = "select * from customer where customerId=?;";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,custId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()){
-                return new CustomerDTO(
-                        resultSet.getString("customerId"),
-                        resultSet.getString("customerName"),
-                        resultSet.getString("city"),
-                        resultSet.getString("email")
-                );
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }*/
 
     public ArrayList<CustomerDTO> getAllCustomer(Connection connection){
         String sql = "select * from customer;";
@@ -92,31 +56,5 @@ public class CustomerDb {
         }
     }
 
-    /*public boolean deleteCustomer(Connection connection, String custId){
-        String sql = "delete from customer where customerId=?;";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,custId);
-            return preparedStatement.executeUpdate() != 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-    /*public boolean updateCustomer(Connection connection, CustomerDTO customerDTO){
-        String sql = "update customer set customerName=?, city=?, email=? where customerId=?;";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,customerDTO.getCustomerName());
-            preparedStatement.setString(2,customerDTO.getCity());
-            preparedStatement.setString(3,customerDTO.getEmail());
-            preparedStatement.setString(4,customerDTO.getCustomerId());
-
-            return preparedStatement.executeUpdate() != 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 }
