@@ -116,7 +116,7 @@ public class ItemController extends HttpServlet {
 
         if (result){
             resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write("Customer information deleted successfully!");
+            resp.getWriter().write("CustomerController information deleted successfully!");
         }else {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
         }
