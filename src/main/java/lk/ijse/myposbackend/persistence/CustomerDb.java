@@ -74,4 +74,20 @@ public class CustomerDb {
     }
 
 
+
+    public boolean updateCustomer(Connection connection, CustomerDTO customerDTO){
+        String sql = "update customer set customerName=?, contact=?, address=? where customerId=?;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,customerDTO.getCustomerName());
+            preparedStatement.setString(2,customerDTO.getContact());
+            preparedStatement.setString(3,customerDTO.getAddress());
+            preparedStatement.setString(4,customerDTO.getCustomerId());
+
+            return preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
