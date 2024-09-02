@@ -54,20 +54,7 @@ public class CustomerController extends HttpServlet {
 
 
 
-    /*private void getCustomer(HttpServletRequest req, HttpServletResponse resp, String custId){
-        var customerDb = new CustomerDb();
-        CustomerDTO customerDTO = customerDb.getCustomer(connection, custId);
-        Jsonb jsonb = JsonbBuilder.create();
 
-        var json = jsonb.toJson(customerDTO);
-        resp.setContentType("application/json");
-        try {
-            resp.getWriter().write(json);
-        } catch (IOException e) {
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            throw new RuntimeException(e);
-        }
-    }*/
     private void generateCustomerId(HttpServletRequest req, HttpServletResponse resp){
         CustomerDb customerDb = new CustomerDb();
         String customerId = customerDb.generateCustomerId(connection);
@@ -83,11 +70,13 @@ public class CustomerController extends HttpServlet {
         }
     }
 
-   /* @Override
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getContentType()!= null && req.getContentType().toLowerCase().startsWith("application/json")){
             Jsonb jsonb = JsonbBuilder.create();
             CustomerDTO customerDTO = jsonb.fromJson(req.getReader(), CustomerDTO.class);
+
+            System.out.println("doPost customerDTO : "+customerDTO.toString());
 
             var customerDb = new CustomerDb();
             boolean result = customerDb.saveCustomer(connection, customerDTO);
@@ -101,41 +90,9 @@ public class CustomerController extends HttpServlet {
         }else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
-    }*/
+    }
 
-    /*@Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getContentType() != null && req.getContentType().toLowerCase().startsWith("application/json")){
-            Jsonb jsonb = JsonbBuilder.create();
-            CustomerDTO customerDTO = jsonb.fromJson(req.getReader(), CustomerDTO.class);
 
-            var customerDb = new CustomerDb();
-            boolean result = customerDb.updateCustomer(connection, customerDTO);
-
-            if (result){
-                resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().write("CustomerController information updated successfully!");
-            }else {
-                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
-            }
-        }else {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }
-    }*/
-
-   /* @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String custId = req.getParameter("customerId");
-        var customerDb = new CustomerDb();
-        boolean result = customerDb.deleteCustomer(connection, custId);
-
-        if (result){
-            resp.setStatus(HttpServletResponse.SC_OK);
-            resp.getWriter().write("CustomerController information deleted successfully!");
-        }else {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
-        }
-    }*/
 
     private void getAllCustomer(HttpServletRequest req, HttpServletResponse resp){
         var customerDb = new CustomerDb();
