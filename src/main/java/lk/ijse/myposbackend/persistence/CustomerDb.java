@@ -32,6 +32,23 @@ public class CustomerDb {
         return null;
     }
 
+    public boolean saveCustomer(Connection connection, CustomerDTO customerDTO){
+        String sql = "insert into customer(customerId,customerName,contact,address) value(?,?,?,?);";
+
+        System.out.println("saveCustomer db customerDTO : "+customerDTO.toString());
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,customerDTO.getCustomerId());
+            preparedStatement.setString(2,customerDTO.getCustomerName());
+            preparedStatement.setString(3,customerDTO.getContact());
+            preparedStatement.setString(4,customerDTO.getAddress());
+
+            return preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     public ArrayList<CustomerDTO> getAllCustomer(Connection connection){
