@@ -92,6 +92,26 @@ public class CustomerController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getContentType() != null && req.getContentType().toLowerCase().startsWith("application/json")){
+            Jsonb jsonb = JsonbBuilder.create();
+            CustomerDTO customerDTO = jsonb.fromJson(req.getReader(), CustomerDTO.class);
+
+            var customerDb = new CustomerDb();
+            boolean result = customerDb.updateCustomer(connection, customerDTO);
+
+            if (result){
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.getWriter().write("CustomerController information updated successfully!");
+            }else {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
+            }
+        }else {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
 
 
     private void getAllCustomer(HttpServletRequest req, HttpServletResponse resp){
