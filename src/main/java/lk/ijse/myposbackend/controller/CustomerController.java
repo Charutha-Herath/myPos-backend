@@ -112,7 +112,21 @@ public class CustomerController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String custId = req.getParameter("customerId");
 
+        System.out.println("CustomerId : "+custId);
+        var customerDb = new CustomerDb();
+        boolean result = customerDb.deleteCustomer(connection, custId);
+
+        if (result){
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.getWriter().write("CustomerController information deleted successfully!");
+        }else {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Failed to saved customer information!");
+        }
+    }
 
     private void getAllCustomer(HttpServletRequest req, HttpServletResponse resp){
         var customerDb = new CustomerDb();
