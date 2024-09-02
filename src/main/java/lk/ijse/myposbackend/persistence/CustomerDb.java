@@ -73,7 +73,17 @@ public class CustomerDb {
         }
     }
 
+    public boolean deleteCustomer(Connection connection, String custId){
+        String sql = "delete from customer where customerId=?;";
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,custId);
+            return preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public boolean updateCustomer(Connection connection, CustomerDTO customerDTO){
         String sql = "update customer set customerName=?, contact=?, address=? where customerId=?;";
