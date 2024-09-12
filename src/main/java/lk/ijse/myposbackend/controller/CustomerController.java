@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lk.ijse.myposbackend.dto.CustomerDTO;
+import lk.ijse.myposbackend.dto.ItemDTO;
 import lk.ijse.myposbackend.persistence.CustomerDb;
+import lk.ijse.myposbackend.persistence.ItemDb;
 
 
 import javax.naming.InitialContext;
@@ -46,9 +48,14 @@ public class CustomerController extends HttpServlet {
             generateCustomerId(req,resp);
         } else if (action.equals("getAllCustomer")) {
             getAllCustomer(req,resp);
-        } else if (action.equals("getCustomer")) {
+        } else if (action.equals("getAllCustomerIds")) {
+            //String custId = req.getParameter("customerId");
+            getAllCustomerIds(req,resp);
+        } else if (action.equals("getCustomerDetails")) {
             String custId = req.getParameter("customerId");
-            //getCustomer(req,resp,custId);
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            System.out.println("customerId : "+custId);
+            getCustomerDetails(req,resp,custId);
         }
     }
 
@@ -134,6 +141,40 @@ public class CustomerController extends HttpServlet {
 
         Jsonb jsonb = JsonbBuilder.create();
         var json = jsonb.toJson(allCustomer);
+
+        resp.setContentType("application/json");
+        try {
+            resp.getWriter().write(json);
+        } catch (IOException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void getAllCustomerIds(HttpServletRequest req, HttpServletResponse resp){
+
+        var customerDb = new CustomerDb();
+        ArrayList<String> arrayList = customerDb.getAllCustomerIds(connection);  // Strong typing
+
+        Jsonb jsonb = JsonbBuilder.create();
+        String json = jsonb.toJson(arrayList);
+
+        resp.setContentType("application/json");
+        try {
+            resp.getWriter().write(json);
+        } catch (IOException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void getCustomerDetails(HttpServletRequest req, HttpServletResponse resp, String id){
+        var customerDb = new CustomerDb();
+        CustomerDTO customerDetails = customerDb.getCustomerDetails(connection,id);
+
+        Jsonb jsonb = JsonbBuilder.create();
+        var json = jsonb.toJson(customerDetails);
 
         resp.setContentType("application/json");
         try {
