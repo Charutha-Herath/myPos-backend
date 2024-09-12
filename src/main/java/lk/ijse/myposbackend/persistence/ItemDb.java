@@ -71,6 +71,55 @@ public class ItemDb {
         }
     }
 
+    public ArrayList getAllItemCodes(Connection connection){
+        String sql = "select id from item;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<String> arrayList = new ArrayList<>();
+            while (resultSet.next()){
+
+                String id = resultSet.getString("id");
+                    arrayList.add(id);
+                System.out.println(id);
+
+                /*ItemDTO itemDTO = new ItemDTO(
+                        resultSet.getString("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("price"),
+                        resultSet.getString("qty")
+                );
+                itemDTOS.add(itemDTO);*/
+            }
+            return arrayList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ItemDTO getItem(Connection connection, String code){
+        String sql = "select * from item where id=?;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,code);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                return new ItemDTO(
+                        resultSet.getString("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("qty"),
+                        resultSet.getString("price")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public boolean updateItem(Connection connection, ItemDTO itemDTO){
         String sql = "update item set name=?, qty=?, price=? where id=?;";
 
