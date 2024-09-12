@@ -38,8 +38,13 @@ public class ItemController extends HttpServlet {
         String action = req.getParameter("action");
         if (action.equals("generateItemCode")){
             generateItemCode(req,resp);
-        }else if (action.equals("getAllItem")){
-            getAllItem(req,resp);
+        }else if (action.equals("getAllItem")) {
+            getAllItem(req, resp);
+        }else if (action.equals("getAllItemCodes")) {
+            getAllItemCodes(req, resp);
+        }else if (action.equals("getItemDetails")){
+            String code = req.getParameter("item_id");
+            getItemDetails(req,resp,code);
         } else if (action.equals("getItem")) {
             String code = req.getParameter("itemCode");
             //getItem(req,resp,code);
@@ -138,9 +143,27 @@ public class ItemController extends HttpServlet {
         }
     }
 
-    /*private void getItem(HttpServletRequest req, HttpServletResponse resp, String code){
+    private void getAllItemCodes(HttpServletRequest req, HttpServletResponse resp) {
+        var itemDb = new ItemDb();
+        ArrayList<String> arrayList = itemDb.getAllItemCodes(connection);  // Strong typing
+
+        Jsonb jsonb = JsonbBuilder.create();
+        String json = jsonb.toJson(arrayList);
+
+        resp.setContentType("application/json");
+        try {
+            resp.getWriter().write(json);
+        } catch (IOException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void getItemDetails(HttpServletRequest req, HttpServletResponse resp, String code){
         var itemDb = new ItemDb();
         ItemDTO itemDTO = itemDb.getItem(connection, code);
+
+        System.out.println("ItemDto : "+itemDTO.toString());
         Jsonb jsonb = JsonbBuilder.create();
 
         var json = jsonb.toJson(itemDTO);
@@ -151,5 +174,5 @@ public class ItemController extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             throw new RuntimeException(e);
         }
-    }*/
+    }
 }
