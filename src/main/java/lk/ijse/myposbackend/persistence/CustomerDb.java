@@ -1,6 +1,7 @@
 package lk.ijse.myposbackend.persistence;
 
 import lk.ijse.myposbackend.dto.CustomerDTO;
+import lk.ijse.myposbackend.dto.ItemDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,6 +74,26 @@ public class CustomerDb {
         }
     }
 
+
+    public ArrayList<String> getAllCustomerIds(Connection connection){
+        String sql = "select customerId from customer;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<String> arrayList = new ArrayList<>();
+            while (resultSet.next()){
+
+                String id = resultSet.getString("customerId");
+                arrayList.add(id);
+                System.out.println(id);
+            }
+            return arrayList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean deleteCustomer(Connection connection, String custId){
         String sql = "delete from customer where customerId=?;";
 
@@ -99,5 +120,28 @@ public class CustomerDb {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public CustomerDTO getCustomerDetails(Connection connection, String code){
+        System.out.println("customerId DB  : "+ code);
+        String sql = "select * from customer where customerId=?;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,code);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                return new CustomerDTO(
+                        resultSet.getString("customerId"),
+                        resultSet.getString("customerName"),
+                        resultSet.getString("contact"),
+                        resultSet.getString("address")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }
